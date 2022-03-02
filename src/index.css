@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+select,
+li {
+  cursor: pointer;
+}
+
+button,
+select,
+li,
+input {
+  border: 1px solid black;
+}
+
+input,
+select,
+button {
+  font-size: inherit;
+}
+
+.App {
+  margin-top: 50px;
+  width: 50vw;
+}
+
+.todo-header {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 50px;
+  margin-bottom: 50px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input {
+  padding: 13px 120px 13px 13px;
+  outline: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  display: grid;
+  grid-template-columns: 1fr 15fr 1fr;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding-left: 15px;
+}
+
+.empty-title {
+  text-align: center;
+}
+
+.list-item__number {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.list-item__text {
+  text-decoration: line-through;
+}
+
+span {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  top: 0;
+  right: 0;
+  padding: 13px 50px 13px;
+  outline: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.delete-btn {
+  position: relative;
+  border: none;
+  border-left: 1px solid black;
+}
+
+.submit-btn {
+  position: absolute;
+  border: 1px solid black;
+}
+
+.submit-btn::after,
+.delete-btn::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+.delete-btn::after {
+  background-color: firebrick;
+}
+
+.select {
+  padding: 13px 50px 13px;
+  outline: none;
+}
+
+.submit-btn:hover::after,
+.delete-btn:hover::after {
+  top: 0px;
+  left: 0px;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .todo-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .App {
+    width: 100vw;
+  }
+
+  .todo-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 50px;
+  }
+}
