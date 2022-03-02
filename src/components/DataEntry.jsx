@@ -1,20 +1,25 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { TodoContext } from '../context/todoContext'
+import { v4 as uuidv4 } from 'uuid'
 
-const Input = () => {
-  const { addTodo } = useContext(TodoContext)
+const DataEntry = () => {
+  const { todo, setTodo } = useContext(TodoContext)
   const [value, setValue] = useState('')
   const inputRef = useRef()
-
-  useEffect(() => inputRef.current.focus(), [value])
 
   const handleChange = (e) => {
     setValue(e.target.value)
   }
-
+  
   const submit = () => {
-    addTodo(value)
+    const newTodo = {
+      id: uuidv4(),
+      isCompleted: false,
+      value,
+    }
+    setTodo([...todo, newTodo])
     setValue('')
+    inputRef.current.focus()
   }
 
   return (
@@ -37,4 +42,4 @@ const Input = () => {
   )
 }
 
-export default Input
+export default DataEntry

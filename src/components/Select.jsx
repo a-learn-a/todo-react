@@ -1,23 +1,20 @@
 import React, { useContext } from 'react'
 import { TodoContext } from '../context/todoContext'
+import { ToDoFilter } from '../constants/constants'
 
 const Select = () => {
-  const { filter, filterTodo } = useContext(TodoContext)
+  const { filter, setFilter } = useContext(TodoContext)
+  
   const handleChange = (e) => {
-    filterTodo(e.target.value)
+    setFilter(e.target.value)
   }
 
   return (
     <select className="select" onChange={handleChange} defaultValue={filter}>
-      <option className="option" value="all">
-        все
-      </option>
-      <option className="option" value="active">
-        активные
-      </option>
-      <option className="option" value="completed">
-        выполненные
-      </option>
+      {Object.values(ToDoFilter).map(({value, text}) => 
+      <option key={value} className="option" value={value}>
+        {text}
+      </option>)}
     </select>
   )
 }

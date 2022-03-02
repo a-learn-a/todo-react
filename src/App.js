@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from './components/Input'
+import DataEntry from './components/DataEntry'
 import Select from './components/Select'
 import List from './components/List'
 
@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className="App">
       <div className="todo-header">
-        <Input />
+        <DataEntry />
         <Select />
       </div>
       <div className="todo-body">
