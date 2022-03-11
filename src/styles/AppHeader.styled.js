@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+// предлагаю отказаться от гридов
 export const StyledAppHeader = styled.div`
   display: grid;
   grid-template-columns: 2fr 1.5fr;

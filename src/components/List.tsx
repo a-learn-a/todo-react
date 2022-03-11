@@ -1,42 +1,40 @@
-import React, { useContext } from 'react'
-import { TodoContext } from '../context/todoContext'
-import { ToDoFilter } from '../constants/constants'
-import { ITodo } from '../types/data'
-import { StyledButton } from '../styles/Button.styled'
-import { StyledListContainer } from '../styles/ListContainer.styled'
-import { StyledLiContent } from '../styles/LiContent.styled'
+import React, { useContext } from "react";
+import { TodoContext } from "../context/todoContext";
+import { ToDoFilter } from "../constants/constants";
+import { ITodo } from "../types/data";
+import { StyledButton } from "../styles/Button.styled";
+import { StyledListContainer } from "../styles/ListContainer.styled";
+import { StyledLiContent } from "../styles/LiContent.styled";
 
 const List: React.FC = () => {
-  const { todo, setTodo, filter } = useContext(TodoContext)
+  const { todo, setTodo, filter } = useContext(TodoContext);
   const list = todo.filter((task) => {
     switch (filter) {
       case ToDoFilter.all.value:
-        return task
+        return task;
       case ToDoFilter.active.value:
-        return !task.isCompleted
+        return !task.isCompleted;
       case ToDoFilter.completed.value:
-        return task.isCompleted
+        return task.isCompleted;
       default:
-        return null
+        return null;
     }
-  })
+  });
 
   const completeTodo = (id: string) => () => {
-    const todoCopy = [...todo]
-    const index = todoCopy.indexOf(
-      todoCopy.find((el) => el.id === id) || ({} as ITodo),
-    )
-    todoCopy[index].isCompleted = !todoCopy[index].isCompleted
-    setTodo(todoCopy)
-  }
+    const todoCopy = [...todo];
+    const index = todoCopy.indexOf(todoCopy.find((el: ITodo) => el.id === id) || ({} as ITodo));
+    todoCopy[index].isCompleted = !todoCopy[index].isCompleted;
+    setTodo(todoCopy);
+  };
 
   const removeTodo = (id: string) => () => {
-    setTodo(todo.filter((el) => el.id !== id))
-  }
+    setTodo(todo.filter((el) => el.id !== id));
+  };
 
   const removeAllTodo = () => {
-    setTodo([])
-  }
+    setTodo([]);
+  };
 
   return (
     <StyledListContainer>
@@ -46,6 +44,7 @@ const List: React.FC = () => {
             {list.map(({ id, isCompleted, value }, index) => (
               <li key={id}>
                 <StyledLiContent order>{index + 1}</StyledLiContent>
+                {/* text - некорректное название для пропса, если там лежит булен */}
                 <StyledLiContent text={isCompleted} onClick={completeTodo(id)}>
                   {value}
                 </StyledLiContent>
@@ -67,7 +66,7 @@ const List: React.FC = () => {
         <p>Список пуст</p>
       )}
     </StyledListContainer>
-  )
-}
+  );
+};
 
-export default List
+export default List;
