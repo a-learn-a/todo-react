@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledDataEntryContainer = styled.div`
-position: relative;
+  position: relative;
 
 input {
   padding: 13px 120px 13px 13px;
@@ -13,9 +13,10 @@ input {
   width: 100%;
 }
 
-div {
+ p {
   position: absolute;
-  top: 59px;
-  font-size: 11px;
-}
+  bottom: -30px;
+  color: red;
+  font-size: 12px;
+} 
 `

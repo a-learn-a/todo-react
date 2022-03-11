@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const StyledLiContent = styled.span<{
   order?: boolean;
-  text?: boolean;
+  isCompleted?: boolean;
 }>`
   ${({ order }) =>
     order &&
@@ -11,8 +11,8 @@ export const StyledLiContent = styled.span<{
       font-size: larger;
     `}
 
-  ${({ text }) =>
-    text &&
+  ${({ isCompleted }) =>
+  isCompleted &&
     css`
       text-decoration: line-through;
     `}

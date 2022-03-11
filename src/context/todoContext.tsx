@@ -8,7 +8,7 @@ const TodoContext = createContext<ITodoContextType>({
   setTodo: () => {},
   filter: "",
   setFilter: () => {},
-}); // null! - так делать не в коем случае нельзя
+});
 
 const TodoState: React.FC<React.ReactNode> = ({ children }) => {
   const [todo, setTodo] = useState<ITodo[]>([]);

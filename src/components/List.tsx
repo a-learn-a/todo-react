@@ -5,9 +5,10 @@ import { ITodo } from "../types/data";
 import { StyledButton } from "../styles/Button.styled";
 import { StyledListContainer } from "../styles/ListContainer.styled";
 import { StyledLiContent } from "../styles/LiContent.styled";
+import { ITodoContextType } from "../types/data";
 
 const List: React.FC = () => {
-  const { todo, setTodo, filter } = useContext(TodoContext);
+  const { todo, setTodo, filter } = useContext<ITodoContextType>(TodoContext);
   const list = todo.filter((task) => {
     switch (filter) {
       case ToDoFilter.all.value:
@@ -29,7 +30,7 @@ const List: React.FC = () => {
   };
 
   const removeTodo = (id: string) => () => {
-    setTodo(todo.filter((el) => el.id !== id));
+    setTodo(todo.filter((el: ITodo) => el.id !== id));
   };
 
   const removeAllTodo = () => {
@@ -44,8 +45,7 @@ const List: React.FC = () => {
             {list.map(({ id, isCompleted, value }, index) => (
               <li key={id}>
                 <StyledLiContent order>{index + 1}</StyledLiContent>
-                {/* text - некорректное название для пропса, если там лежит булен */}
-                <StyledLiContent text={isCompleted} onClick={completeTodo(id)}>
+                <StyledLiContent isCompleted={isCompleted} onClick={completeTodo(id)}>
                   {value}
                 </StyledLiContent>
                 <StyledButton danger border="border-left" onClick={removeTodo(id)}>

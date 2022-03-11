@@ -15,3 +15,9 @@ export interface ITodoContextType {
   filter: string;
   setFilter: React.Dispatch<React.SetStateAction<string>>;
 }
+
+export interface IToDoFilter {
+  all: { text: string, value: string },
+  active: { text: string, value: string },
+  completed: { text: string, value: string }
+}
