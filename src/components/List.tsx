@@ -1,54 +1,63 @@
-import React, { useContext } from "react";
-import { TodoContext } from "../context/todoContext";
-import { ToDoFilter } from "../constants/constants";
-import { ITodo } from "../types/data";
-import { StyledButton } from "../styles/Button.styled";
-import { StyledListContainer } from "../styles/ListContainer.styled";
-import { StyledLiContent } from "../styles/LiContent.styled";
-import { ITodoContextType } from "../types/data";
+import React from 'react'
+import { ToDoFilter } from '../constants/constants'
+import { StyledButton } from '../styles/Button.styled'
+import { StyledListContainer } from '../styles/ListContainer.styled'
+import { StyledLiContent } from '../styles/LiContent.styled'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleTodo } from '../redux/actions'
+import { ITodo } from '../redux/types'
+import { deleteTodo, deleteAllTodo } from '../redux/actions'
+import {IRootState} from '../redux/types'
 
 const List: React.FC = () => {
-  const { todo, setTodo, filter } = useContext<ITodoContextType>(TodoContext);
-  const list = todo.filter((task) => {
+  const dispatch = useDispatch()
+  const todo = useSelector((state: IRootState) => state.todoItems)
+  const filter = useSelector((state: IRootState) => state.visibilityFilter)
+
+  const list = todo.filter((task: ITodo) => {
     switch (filter) {
       case ToDoFilter.all.value:
-        return task;
+        return task
       case ToDoFilter.active.value:
-        return !task.isCompleted;
+        return !task.isCompleted
       case ToDoFilter.completed.value:
-        return task.isCompleted;
+        return task.isCompleted
       default:
-        return null;
+        return null
     }
-  });
+  })
 
-  const completeTodo = (id: string) => () => {
-    const todoCopy = [...todo];
-    const index = todoCopy.indexOf(todoCopy.find((el: ITodo) => el.id === id) || ({} as ITodo));
-    todoCopy[index].isCompleted = !todoCopy[index].isCompleted;
-    setTodo(todoCopy);
-  };
+  const handleToggleTodo = (id: number) => () => {
+    dispatch(toggleTodo(id))
+  }
 
-  const removeTodo = (id: string) => () => {
-    setTodo(todo.filter((el: ITodo) => el.id !== id));
-  };
+  const handleDeleteTodo = (id: number) => () => {
+    dispatch(deleteTodo(id))
+  }
 
-  const removeAllTodo = () => {
-    setTodo([]);
-  };
-
+  const handleDeleteAllTodo = () => {
+    dispatch(deleteAllTodo())
+  }
+  
   return (
     <StyledListContainer>
       {list.length ? (
         <>
           <ul>
-            {list.map(({ id, isCompleted, value }, index) => (
+            {list.map(({ id, isCompleted, text }, index) => (
               <li key={id}>
-                <StyledLiContent order>{index + 1}</StyledLiContent>
-                <StyledLiContent isCompleted={isCompleted} onClick={completeTodo(id)}>
-                  {value}
+                <StyledLiContent order={index}>{index + 1}</StyledLiContent>
+                <StyledLiContent
+                  isCompleted={isCompleted}
+                  onClick={handleToggleTodo(id)}
+                >
+                  {text}
                 </StyledLiContent>
-                <StyledButton danger border="border-left" onClick={removeTodo(id)}>
+                <StyledButton
+                  danger
+                  border="border-left"
+                  onClick={handleDeleteTodo(id)}
+                >
                   x
                 </StyledButton>
               </li>
@@ -56,7 +65,7 @@ const List: React.FC = () => {
           </ul>
           {list.length && filter === ToDoFilter.all.value && (
             <div>
-              <StyledButton danger border="border" onClick={removeAllTodo}>
+              <StyledButton danger border="border" onClick={handleDeleteAllTodo}>
                 удалить все задачи
               </StyledButton>
             </div>
@@ -66,7 +75,8 @@ const List: React.FC = () => {
         <p>Список пуст</p>
       )}
     </StyledListContainer>
-  );
-};
+  )
+}
 
-export default List;
+export default List
+

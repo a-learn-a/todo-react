@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const StyledLiContent = styled.span<{
-  order?: boolean;
+  order?: number;
   isCompleted?: boolean;
 }>`
   ${({ order }) =>

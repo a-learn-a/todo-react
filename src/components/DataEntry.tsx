@@ -1,13 +1,12 @@
-import React, { useState, useRef, useContext } from "react";
-import { TodoContext } from "../context/todoContext";
-import { ITodo } from "../types/data";
+import React, { useState, useRef } from "react";
 import { StyledDataEntryContainer } from "../styles/DataEntryContainer.styled";
-import { IError } from "../types/data";
 import { StyledButton } from "../styles/Button.styled";
-import { ITodoContextType } from "../types/data";
+import { useDispatch } from "react-redux";
+import {addTodo} from '../redux/actions'
+import {IError} from '../redux/types'
 
 const DataEntry: React.FC = () => {
-  const { todo, setTodo } = useContext<ITodoContextType>(TodoContext);
+  const dispatch = useDispatch()
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<IError>({
     isShort: false,
@@ -26,24 +25,18 @@ const DataEntry: React.FC = () => {
       setError({ isShort: true, isIncorrect: false });
       return;
     }
-    setError({ isShort: false, isIncorrect: false });
+    setError({ isShort: false, isIncorrect: false }); 
+    inputRef.current?.focus()
   };
 
-  const submit = () => {
-    const newTodo: ITodo = {
-      id: Date.now(),
-      isCompleted: false,
-      value,
-    };
-    setTodo([...todo, newTodo]);
+  const submit = () => { 
+    dispatch(addTodo(value))
     setValue("");
-    setError({ isShort: false, isIncorrect: false });
-    inputRef.current?.focus(); 
   };
 
   const handleKeyUp: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (value.trim().length < 5 || value.match(/пить|курить/gim)) return;
-    if (e.code === "Enter") submit();
+    if (e.code === "Enter") submit(); 
   };
 
   const disabled = value.trim().length < 5 || value.match(/пить|курить/gim)
